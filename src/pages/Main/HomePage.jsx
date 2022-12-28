@@ -16,12 +16,13 @@ const HomePage = () => {
                     <Row gutter={4}>
                         <Col span={8}>
                             <Card style={{
-                                width: 300,
+                                width: 300
                             }}>
                                 <div key={data.name}>
                                     <p>{data.name}</p>
                                     <p>{data.id}</p>
                                     <p>{data.unitsInStock}</p>
+                                    <p>{data.quantityPerUnit}</p>
                                 </div>
                             </Card>
                         </Col>

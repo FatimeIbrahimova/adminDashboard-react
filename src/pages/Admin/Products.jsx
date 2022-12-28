@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Popconfirm, Table } from 'antd';
+import { Button, Table } from 'antd';
 import { axiosInstance } from "../Admin/AxiosInstance/Index";
 
-const Products = () => {
-    const [user, setUser] = useState()
+const Products = ({ box }) => {
+    const [product, setProduct] = useState();
     useEffect(() => {
         fetch("https://northwind.vercel.app/api/products")
             .then((res) => res.json())
-            .then((data) => setUser(data));
-    }, [setUser]);
+            .then((data) =>setProduct(data));
+    }, [setProduct]);
 
     const handleDelete = async (id) => {
-        await axiosInstance.delete(`users/${id}`);
+        await axiosInstance.delete(`products/${id}`);
         console.log("delete");
     };
+
 
     const columns = [
 
@@ -55,12 +56,19 @@ const Products = () => {
                     <Button danger onClick={(id) => handleDelete(id)}>Delete</Button>
                 </>
             )
+
         }
     ];
     return (
         <div>
-            <Table columns={columns} dataSource={user} />;
-
+            <Table columns={columns} dataSource={product} />
+          
+            <Table/>
+            {box?.map((item,index) => {
+                console.log(item);
+                return 
+                <Table key={index} columns={columns} dataSource={item.nameInput}></Table>
+            })}
         </div>
     )
 }

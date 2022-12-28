@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Button, Modal } from 'antd';
+import { v4 as uuidv4 } from 'uuid';
 
-const Dashboard = () => {
+const Dashboard = ({box,setBox}) => {
     const [idInput, setIdInput] = useState("");
     const [nameInput, setNameInput] = useState("");
     const [priceInput, setPriceInput] = useState("");
@@ -11,16 +12,7 @@ const Dashboard = () => {
     const [nameSend, setNameSend] = useState(false);
     const [priceSend, setPriceSend] = useState(false);
     const [stockSend, setStockSend] = useState(false);
-    const sendProduct = () => {
-        setIdSend(true);
-        console.log("the name sent is" + idInput);
-        setNameSend(true);
-        console.log("the age sent is" + nameInput);
-        setPriceSend(true);
-        console.log("the age sent is" + priceInput);
-        setStockSend(true);
-        console.log("the name sent is" + stockInput);
-    }
+ 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const showModal = () => {
@@ -28,6 +20,26 @@ const Dashboard = () => {
     };
     const handleOk = () => {
         setIsModalOpen(false);
+        setIdSend(true);
+        console.log(idInput);
+        setNameSend(true);
+        console.log( nameInput);
+        setPriceSend(true);
+        console.log( priceInput);
+        setStockSend(true);
+        console.log( stockInput);
+        let newBox={
+            idInput:idInput,
+            nameInput:nameInput,
+            id:uuidv4(),
+            priceInput:priceInput,
+            stockInput:stockInput
+        }
+        console.log(newBox);
+        setBox([...box,newBox]);
+        setNameInput(0);
+        setPriceInput(0);
+        setStockInput(0);
     };
     const handleCancel = () => {
         setIsModalOpen(false);
@@ -36,16 +48,15 @@ const Dashboard = () => {
         <>
             <div>Dashboard</div>
             <Button type="primary" onClick={showModal}>
-                Open Modal
+                Add Product
             </Button>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="Product Desc" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
                 <input placeholder='enter product id' onChange={(e) => setIdInput(e.target.value)} />
                 <input placeholder='enter product name' onChange={(e) => setNameInput(e.target.value)} />
                 <input placeholder='enter product unitPrice' onChange={(e) => setPriceInput(e.target.value)} />
                 <input placeholder='enter product unitsInStock' onChange={(e) => setStockInput(e.target.value)} />
                 <input placeholder='enter product quantityPerUnit' />
                 <input placeholder='enter product categoryId' />
-                <button onClick={() => sendProduct()}>add</button>
             </Modal>
         </>
 
